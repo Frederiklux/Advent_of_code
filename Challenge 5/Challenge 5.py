@@ -17,16 +17,27 @@ for i in range(10,max_lines):
     crane_commands.append(content.splitlines()[i])
 
 def crate_move(x):
-    moved_crates = x[5:7].strip()
-    from_stack = x[x.find('from')+5]
-    to_stack = x[x.find('to')+3]
-    print(moved_crates, from_stack, to_stack)
+    moved_crates_quant = int(x[5:7].strip())
+    from_stack = int(x[x.find('from')+5])
+    to_stack = int(x[x.find('to')+3])
+    moved_crates = all_stacks[int(from_stack)-1][len(all_stacks[from_stack-1])-moved_crates_quant:][::-1]
+    all_stacks[int(from_stack)-1] = all_stacks[int(from_stack)-1][0:len(all_stacks[from_stack-1])-moved_crates_quant]
+    all_stacks[to_stack-1] = all_stacks[to_stack-1]+moved_crates
 
-crate_move(crane_commands[25])
-# Få loadet de 9 stacks i lister, hvor du starter fra bunden.
+for i in range(len(crane_commands)):
+    crate_move(crane_commands[i])
 
-# Lav en funktion, der flytter kasser som en kran efter kommandoer
+def crate_move_9001(x):
+    moved_crates_quant = int(x[5:7].strip())
+    from_stack = int(x[x.find('from')+5])
+    to_stack = int(x[x.find('to')+3])
+    moved_crates = all_stacks[int(from_stack)-1][len(all_stacks[from_stack-1])-moved_crates_quant:]
+    all_stacks[int(from_stack)-1] = all_stacks[int(from_stack)-1][0:len(all_stacks[from_stack-1])-moved_crates_quant]
+    all_stacks[to_stack-1] = all_stacks[to_stack-1]+moved_crates
 
-# Kør alle kommandoer igennem din kran-funktion
 
-# gg wp
+for i in range(len(crane_commands)):
+    crate_move_9001(crane_commands[i])
+
+answer1 = PSNRGBTFT
+answer2 = BNTZFPMMW
