@@ -55,4 +55,42 @@ do
     done;
 done
 
-echo "The answer to day 2 is: $(awk '{s+=$1} END {printf "%.0f\n", s}' games.txt)"
+echo "The first answer to day 2 is: $(awk '{s+=$1} END {printf "%.0f\n", s}' games.txt)"
+
+for VARIABLE in $value 
+do
+    red=$(echo $VARIABLE | cut -d ':' -f 2 | grep -oE '.{,3}red' | tr -d [:alpha:] | awk '{$1=$1;print}')
+    redmax=0
+    for file in $red
+    do 
+        if [ "$file" -ge "$redmax" ]; then
+            redmax=$file
+        else
+            :
+        fi
+    done
+    green=$(echo $VARIABLE | cut -d ':' -f 2 | grep -oE '.{,3}green' | tr -d [:alpha:] | awk '{$1=$1;print}')
+    greenmax=0
+    for file in $green
+    do 
+        if [ "$file" -ge "$greenmax" ]; then
+            greenmax=$file
+        else
+            :
+        fi
+    done
+    blue=$(echo $VARIABLE | cut -d ':' -f 2 | grep -oE '.{,3}blue' | tr -d [:alpha:] | awk '{$1=$1;print}')
+    bluemax=0
+    for file in $blue
+    do 
+        if [ "$file" -ge "$bluemax" ]; then
+            bluemax=$file
+        else
+            :
+        fi
+    done
+    allmax=$(("$redmax"*"$greenmax"*"$bluemax"))
+    accallmax=$(($accallmax+$allmax))
+done
+
+echo "The second answer to day 2 is:" $accallmax
